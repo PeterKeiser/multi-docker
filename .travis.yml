@@ -22,4 +22,5 @@ services:
     - docker push peterkeiser/multi-nginx
     - docker push peterkeiser/multi-server
     - docker push peterkeiser/multi-worker
+    
  
