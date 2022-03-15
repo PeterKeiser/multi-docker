@@ -4,24 +4,24 @@ language: generic
 services:
   - docker
 
-  before_install:
-    - docker build -t peterkeiser/react-test -f ./client/Dockerfile.dev ./client
-  
-  script:
-    - docker run -e CI=true peterkeiser/react-test npm test
+before_install:
+  - docker build -t peterkeiser/react-test -f ./client/Dockerfile.dev ./client
 
-  after_success:
-    - docker build -t peterkeiser/multi-client ./client
-    - docker build -t peterkeiser/multi-nginx ./nginx
-    - docker build -t peterkeiser/multi-server ./server
-    - docker build -t peterkeiser/multi-worker ./worker
-    # Log in to the docker CLI
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+script:
+  - docker run -e CI=true peterkeiser/react-test npm test
 
-    # Take those images and push them to docker hub
-    - docker push peterkeiser/multi-client
-    - docker push peterkeiser/multi-nginx
-    - docker push peterkeiser/multi-server
-    - docker push peterkeiser/multi-worker
+after_success:
+  - docker build -t peterkeiser/multi-client ./client
+  - docker build -t peterkeiser/multi-nginx ./nginx
+  - docker build -t peterkeiser/multi-server ./server
+  - docker build -t peterkeiser/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # Take those images and push them to docker hub
+  - docker push peterkeiser/multi-client
+  - docker push peterkeiser/multi-nginx
+  - docker push peterkeiser/multi-server
+  - docker push peterkeiser/multi-worker
     
  
